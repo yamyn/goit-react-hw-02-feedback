@@ -15,13 +15,8 @@ export default class App extends Component {
     countTotalFeedback = () =>
         this.options.reduce((acc, option) => this.state[option] + acc, 0);
 
-    countPositiveFeedbackPercentage = () => {
-        const total = this.countTotalFeedback();
-        if (!total) return 'not positive feedbacks';
-        return `${Math.round(
-            (this.state.good / this.countTotalFeedback()) * 100,
-        )}%`;
-    };
+    countPositiveFeedbackPercentage = () =>
+        `${Math.round((this.state.good / this.countTotalFeedback()) * 100)}%`;
 
     addFeedback = e => {
         const option = e.currentTarget.name;

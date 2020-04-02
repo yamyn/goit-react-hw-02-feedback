@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { statList } from './Statistics.module.css';
+import { list } from './Statistics.module.css';
 import StatOption from './StatOption';
 
 const Statistics = ({ options, statistics }) => (
-    <ul className={statList}>
+    <ul className={list}>
         {options.map(option => (
             <li key={option}>
                 <StatOption option={option} value={statistics[option]} />
