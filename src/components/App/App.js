@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 
 import styles from './App.module.css';
 
+import Statistics from '../Statistics/Statistics';
+import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
+import Section from '../Section/Section';
+import Notification from '../Notification/Notification';
+
 export default class App extends Component {
     state = { good: 0, neutral: 0, bad: 0 };
 
@@ -13,12 +18,12 @@ export default class App extends Component {
     countPositiveFeedbackPercentage = () => {
         const total = this.countTotalFeedback();
         if (!total) return 'not positive feedbacks';
-        return `${((this.state.good / this.countTotalFeedback()) * 100).toFixed(
-            1,
+        return `${Math.round(
+            (this.state.good / this.countTotalFeedback()) * 100,
         )}%`;
     };
 
-    handleIncrement = e => {
+    addFeedback = e => {
         const option = e.currentTarget.name;
 
         this.setState(state => ({
@@ -36,31 +41,22 @@ export default class App extends Component {
             <>
                 <div className={styles.container}>
                     <h1>goit-react-hw-02-feedback</h1>
-                    <h2>Please leave feedback</h2>
-                    <ul className={styles.optionList}>
-                        {this.options.map(option => (
-                            <li key={option} className={styles.optionListItem}>
-                                <button
-                                    type="button"
-                                    onClick={this.handleIncrement}
-                                    name={option}
-                                >
-                                    {option}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-
-                    <h2>Statistics</h2>
-                    <ul className={styles.statList}>
-                        {statOpt.map(option => (
-                            <li key={option}>
-                                <p>
-                                    {option}: {statistics[option]}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
+                    <Section title="Please leave feedback">
+                        <FeedbackOptions
+                            options={this.options}
+                            onAddFeedback={this.addFeedback}
+                        />
+                    </Section>
+                    <Section title="Statistics">
+                        {statistics.total !== 0 ? (
+                            <Statistics
+                                options={statOpt}
+                                statistics={statistics}
+                            />
+                        ) : (
+                            <Notification message="No feedback given" />
+                        )}
+                    </Section>
                 </div>
             </>
         );
