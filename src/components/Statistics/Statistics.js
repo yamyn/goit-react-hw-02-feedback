@@ -1,25 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { list } from './Statistics.module.css';
+import Notification from '../Notification/Notification';
 import StatOption from './StatOption';
 
-const Statistics = ({ options, statistics }) => (
-    <ul className={list}>
-        {options.map(option => (
-            <li key={option}>
-                <StatOption option={option} value={statistics[option]} />
-            </li>
-        ))}
-    </ul>
-);
+export default class Statistics extends Component {
+    static propTypes = {
+        statistics: PropTypes.objectOf(PropTypes.number),
+    };
 
-Statistics.propTypes = {
-    options: PropTypes.arrayOf(PropTypes.string).isRequired,
+    options = Object.keys(this.props.statistics);
 
-    statistics: PropTypes.objectOf(
-        PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    ),
-};
+    countTotalFeedback = () =>
+        this.options.reduce(
+            (acc, option) => this.props.statistics[option] + acc,
+            0,
+        );
 
-export default Statistics;
+    countPositiveFeedbackPercentage = () =>
+        `${Math.round(
+            (this.props.statistics.good / this.countTotalFeedback()) * 100,
+        )}%`;
+
+    render() {
+        const listStatistics = {
+            ...this.props.statistics,
+            total: this.countTotalFeedback(),
+            'positive feedback': this.countPositiveFeedbackPercentage(),
+        };
+        const listOptions = Object.keys(listStatistics);
+        return (
+            <>
+                {listStatistics.total !== 0 ? (
+                    <ul className={list}>
+                        {listOptions.map(option => (
+                            <li key={option}>
+                                <StatOption
+                                    option={option}
+                                    value={listStatistics[option]}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <Notification message="No feedback given" />
+                )}
+            </>
+        );
+    }
+}

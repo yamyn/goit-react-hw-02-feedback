@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const StatOption = ({ option, value }) => (
-    <>
-        <p>
-            {option}: {value}
-        </p>
-    </>
+    <p>
+        {option}: {value}
+    </p>
 );
 
 StatOption.propTypes = {
