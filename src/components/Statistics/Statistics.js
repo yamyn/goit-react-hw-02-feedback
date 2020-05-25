@@ -7,7 +7,7 @@ import StatOption from './StatOption';
 
 export default class Statistics extends Component {
     static propTypes = {
-        statistics: PropTypes.objectOf(PropTypes.number),
+        statistics: PropTypes.objectOf(PropTypes.number).isRequired,
     };
 
     options = Object.keys(this.props.statistics);
@@ -24,8 +24,10 @@ export default class Statistics extends Component {
         )}%`;
 
     render() {
+        const { statistics } = this.props;
+
         const listStatistics = {
-            ...this.props.statistics,
+            ...statistics,
             total: this.countTotalFeedback(),
             'positive feedback': this.countPositiveFeedbackPercentage(),
         };

@@ -9,7 +9,7 @@ const StatOption = ({ option, value }) => (
 
 StatOption.propTypes = {
     option: PropTypes.string.isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default StatOption;

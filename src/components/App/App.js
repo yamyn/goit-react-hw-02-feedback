@@ -16,6 +16,7 @@ export default class App extends Component {
             [option]: state[option] + 1,
         }));
     };
+
     render() {
         return (
             <>

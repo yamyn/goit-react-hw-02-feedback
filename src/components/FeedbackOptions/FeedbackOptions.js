@@ -23,7 +23,7 @@ const FeedbackOptions = ({ statistics, onAddFeedback }) => {
 FeedbackOptions.propTypes = {
     statistics: PropTypes.objectOf(
         PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    ),
+    ).isRequired,
     onAddFeedback: PropTypes.func.isRequired,
 };
 
